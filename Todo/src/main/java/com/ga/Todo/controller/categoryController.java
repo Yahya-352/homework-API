@@ -9,8 +9,6 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Optional;
 
-
-
 @RestController
 @RequestMapping("/categories")
 public class categoryController {
@@ -28,7 +26,6 @@ public class categoryController {
         return "hello world!";
     }
 
-
     @PostMapping("/")
     public Category createCategory(@RequestBody Category category){
         return categoryService.createCategory(category);
@@ -42,6 +39,16 @@ public class categoryController {
     @GetMapping("/{id}")
     public Optional<Category> getCategory(@PathVariable Long id){
         return categoryService.getCategory(id);
+    }
+
+    @PutMapping("/update/{id}")
+    public Category updateCategory(@PathVariable long id ,@RequestBody Category category){
+        return categoryService.updateCategory(id,category);
+    }
+
+    @DeleteMapping("/delete/{id}")
+    public void deleteCategory(@PathVariable Long id){
+        categoryService.deleteCategory(id);
     }
 
 }

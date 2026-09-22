@@ -1,5 +1,6 @@
 package com.ga.Todo.service;
 
+import com.ga.Todo.exceptions.InformationNotFoundException;
 import com.ga.Todo.model.Category;
 import com.ga.Todo.repository.CategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,5 +27,21 @@ public class CategoryService {
 
     public Optional<Category> getCategory(long id){
         return categoryRepository.findById(id);
+    }
+
+    public Category updateCategory(Long id,Category category){
+        Optional<Category> category1 = categoryRepository.findById(id);
+        if(category1.isPresent()){
+            Category existingCategory = category1.get();
+            existingCategory.setName(category.getName());
+            existingCategory.setDescription(category.getDescription());
+            return categoryRepository.save(existingCategory);
+        }else{
+            throw new InformationNotFoundException("Id not Found");
+        }
+    }
+
+    public void deleteCategory(Long id){
+        categoryRepository.deleteById(id);
     }
 }
