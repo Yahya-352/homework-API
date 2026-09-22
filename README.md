@@ -35,13 +35,12 @@ https://github.com/Yahya-352/homework-API.git
 
 ## Endpoints
 
-| Step | Method | URL | Description |
-|------|--------|-----|-------------|
-| 1 | GET | `/hello` | Returns "Hello World!" |
-| 3a | GET | `/api/categories/` | Get all categories |
-| 3a | POST | `/api/categories/` | Create a category |
-| 3a | GET | `/api/categories/{categoryId}` | Get one category |
-| ... | ... | ... | ... |
+| Method | URL | Description |
+|--------|-----|-------------|
+| GET | `/hello` | Returns "Hello World!" |
+| GET | `/api/categories/` | Get all categories |
+| POST | `/api/categories/` | Create a category |
+| GET | `/api/categories/{categoryId}` | Get one category |
 
 ## Tech Stack
 
