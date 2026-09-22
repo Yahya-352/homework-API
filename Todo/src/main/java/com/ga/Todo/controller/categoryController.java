@@ -10,7 +10,9 @@ import java.util.List;
 import java.util.Optional;
 
 
+
 @RestController
+@RequestMapping("/categories")
 public class categoryController {
 
     @Autowired
@@ -27,17 +29,17 @@ public class categoryController {
     }
 
 
-    @PostMapping("/categories")
+    @PostMapping("/")
     public Category createCategory(@RequestBody Category category){
         return categoryService.createCategory(category);
     }
 
-    @GetMapping("/categories")
+    @GetMapping("/")
     public List<Category> getCategories(){
         return categoryService.getCategories();
     }
 
-    @GetMapping("/categories/{id}")
+    @GetMapping("/{id}")
     public Optional<Category> getCategory(@PathVariable Long id){
         return categoryService.getCategory(id);
     }
