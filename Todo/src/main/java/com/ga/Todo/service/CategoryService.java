@@ -25,7 +25,7 @@ public class CategoryService {
 
     public Optional<Category> getCategory(long id){
         return categoryRepository.findById(id);
-    }
+    }}
 
     public Category updateCategory(Long id,Category category){
         Optional<Category> category1 = categoryRepository.findById(id);
