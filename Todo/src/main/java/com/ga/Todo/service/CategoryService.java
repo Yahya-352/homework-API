@@ -14,8 +14,6 @@ public class CategoryService {
     @Autowired
     private CategoryRepository categoryRepository;
 
-
-
     public Category createCategory(Category category){
         Category category1 = categoryRepository.findByName(category.getName());
         return categoryRepository.save(category);
