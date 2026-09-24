@@ -41,6 +41,8 @@ https://github.com/Yahya-352/homework-API.git
 | GET | `/api/categories/` | Get all categories |
 | POST | `/api/categories/` | Create a category |
 | GET | `/api/categories/{categoryId}` | Get one category |
+| PUT | `/categories/update/{id}` | Update a category |
+| DELETE | `/categories/delete/{id}` | Delete a category |
 
 ## Tech Stack
 
