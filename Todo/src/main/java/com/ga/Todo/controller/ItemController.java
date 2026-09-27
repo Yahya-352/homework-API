@@ -14,7 +14,7 @@ public class ItemController {
 
     private ItemService itemService;
 
-    @PostMapping("/create")
+    @PostMapping("/create/{categoryId}")
     public Item createItem(@PathVariable Long categoryId ,@RequestBody Item item){
         return itemService.createItem(categoryId , item);
     }
@@ -36,6 +36,6 @@ public class ItemController {
 
     @DeleteMapping("/delete/{itemId}")
     public void deleteItem(@PathVariable Long itemId){
-        deleteItem(itemId);
+        itemService.deleteItem(itemId);
     }
 }
