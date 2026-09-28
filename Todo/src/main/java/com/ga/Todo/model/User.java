@@ -36,6 +36,11 @@ public class User {
     @OneToMany(mappedBy = "user" , fetch = FetchType.LAZY)
     private List<Item> itemList;
 
+    @JsonIgnore
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
+
     @OneToMany(mappedBy = "user" , fetch = FetchType.LAZY)
     private List<Category> categoryList;
 

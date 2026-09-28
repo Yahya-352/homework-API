@@ -1,9 +1,13 @@
 package com.ga.Todo.service;
 
+import com.ga.Todo.exceptions.InformationExistException;
 import com.ga.Todo.exceptions.InformationNotFoundException;
 import com.ga.Todo.model.Category;
+import com.ga.Todo.model.User;
 import com.ga.Todo.repository.CategoryRepository;
+import com.ga.Todo.security.MyUserDetails;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -14,13 +18,30 @@ public class CategoryService {
     @Autowired
     private CategoryRepository categoryRepository;
 
+    public static User getCurrentLoggedInUser(){
+        MyUserDetails userDetails = (MyUserDetails) SecurityContextHolder
+                .getContext().getAuthentication().getPrincipal();
+
+        return userDetails.getUser();
+    }
+
     public Category createCategory(Category category){
-        Category category1 = categoryRepository.findByName(category.getName());
+        if (categoryRepository.findByUserIdAndName(getCurrentLoggedInUser().getId(), category.getName()) != null) {
+            throw new InformationExistException(
+                    "Category with name " + category.getName() + " already exists");
+        }
+        category.setUser(getCurrentLoggedInUser());
         return categoryRepository.save(category);
     }
 
+
+
     public List<Category> getCategories(){
         return categoryRepository.findAll();
+    }
+
+    public List<Category> getLoggedInUserCategories(){
+        return categoryRepository.findByUserId(getCurrentLoggedInUser().getId());
     }
 
     public Optional<Category> getCategory(long id){
@@ -28,18 +49,29 @@ public class CategoryService {
     }
 
     public Category updateCategory(Long id,Category category){
-        Optional<Category> category1 = categoryRepository.findById(id);
-        if(category1.isPresent()){
-            Category existingCategory = category1.get();
-            existingCategory.setName(category.getName());
-            existingCategory.setDescription(category.getDescription());
-            return categoryRepository.save(existingCategory);
+        Optional<Category> categoryOptional = categoryRepository.findById(id);
+        if(categoryOptional.isPresent()){
+            if(getCurrentLoggedInUser().getId().equals(categoryOptional.get().getUser().getId())){
+                Category existing = categoryOptional.get();
+                existing.setName(category.getName());
+                existing.setDescription(category.getDescription());
+                return categoryRepository.save(existing);
+            }else{
+                throw new IllegalArgumentException("YOU cannot update a category u did not create");
+            }
+
         }else{
-            throw new InformationNotFoundException("Id not Found");
+            throw new InformationNotFoundException
+                    ("Category with ID : "+ id + "is not found");
         }
     }
 
     public void deleteCategory(Long id){
-        categoryRepository.deleteById(id);
-    }
+        Optional<Category> category = categoryRepository.findById(id);
+        if(category.get().getUser().getId().equals(getCurrentLoggedInUser().getId())){
+            categoryRepository.deleteById(id);
+        }else{
+            throw new IllegalArgumentException("U CANNOT DELETE A" +
+                    " CATEGORY THAT YOU DID NOT CREATE");
+        }    }
 }
