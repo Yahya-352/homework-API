@@ -35,19 +35,23 @@ https://github.com/Yahya-352/homework-API.git
 
 ## Endpoints
 
-| Method | URL | Description |
-|--------|-----|-------------|
-| GET | `/hello` | Returns "Hello World!" |
-| GET | `/api/categories/` | Get all categories |
-| POST | `/api/categories/` | Create a category |
-| GET | `/api/categories/{categoryId}` | Get one category |
-| PUT | `/categories/update/{id}` | Update a category |
-| DELETE | `/categories/delete/{id}` | Delete a category |
-| POST | `/items/create/{categoryId}` | Create an item under a category |
-| GET | `/items/` | Get all items |
-| GET | `/items/{categoryId}` | Get all items for a category |
-| PUT | `/items/update/{itemId}` | Update an item |
-| DELETE | `/items/delete/{itemId}` | Delete an item |
+| Method | URL | Access | Description |
+|--------|-----|--------|-------------|
+| POST | `/users/register` | Public | Register a new user |
+| POST | `/users/login` | Public | Log in and receive a JWT |
+| GET | `/hello` | Private | Returns "Hello World!" |
+| GET | `/api/categories/` | Private | Get all categories |
+| POST | `/api/categories/` | Private | Create a category |
+| GET | `/api/categories/{categoryId}` | Private | Get one category |
+| PUT | `/categories/update/{id}` | Private | Update a category |
+| DELETE | `/categories/delete/{id}` | Private | Delete a category |
+| POST | `/items/create/{categoryId}` | Private | Create an item under a category |
+| GET | `/items/` | Private | Get all items |
+| GET | `/items/{categoryId}` | Private | Get all items for a category |
+| PUT | `/items/update/{itemId}` | Private | Update an item |
+| DELETE | `/items/delete/{itemId}` | Private | Delete an item |
+
+> **Public** endpoints need no token. **Private** endpoints require the header `Authorization: Bearer <token>`.
 
 ## Tech Stack
 
